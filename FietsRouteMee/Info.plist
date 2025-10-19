@@ -2,32 +2,34 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>location</string>
-		<string>background-processing</string>
-		<string>background-app-refresh</string>
-	</array>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Deze app heeft toegang tot je locatie nodig om fietsroutes te berekenen en je positie op de kaart te tonen.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Deze app heeft toegang tot je locatie nodig om fietsroutes te berekenen en je positie op de kaart te tonen, ook wanneer de app op de achtergrond draait.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Deze app heeft toegang tot je locatie nodig om fietsroutes te berekenen en je positie op de kaart te tonen, ook wanneer de app op de achtergrond draait.</string>
+	<key>CFBundleDisplayName</key>
+	<string>FietsRouteMee</string>
+	<key>CFBundleName</key>
+	<string>FietsRouteMee</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.0</string>
+	<key>CFBundleVersion</key>
+	<string>202510191335</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.navigation</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>api.openweathermap.org</key>
+			<key>api.openrouteservice.org</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<false/>
 				<key>NSExceptionMinimumTLSVersion</key>
 				<string>TLSv1.2</string>
 			</dict>
-			<key>api.openrouteservice.org</key>
+			<key>api.openweathermap.org</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<false/>
@@ -36,12 +38,24 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>CFBundleDisplayName</key>
-	<string>FietsRouteMee</string>
-	<key>CFBundleName</key>
-	<string>FietsRouteMee</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Deze app heeft toegang tot je locatie nodig om fietsroutes te berekenen en je positie op de kaart te tonen, ook wanneer de app op de achtergrond draait.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Deze app heeft toegang tot je locatie nodig om fietsroutes te berekenen en je positie op de kaart te tonen, ook wanneer de app op de achtergrond draait.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Deze app heeft toegang tot je locatie nodig om fietsroutes te berekenen en je positie op de kaart te tonen.</string>
+	<key>NSMapsUsageDescription</key>
+	<string>Deze app gebruikt Maps voor routeberekening en navigatie.</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Deze app gebruikt tracking om je fietsroutes te analyseren en betere suggesties te geven.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+		<string>background-processing</string>
+		<string>background-app-refresh</string>
+	</array>
+	<key>UIFileSharingEnabled</key>
+	<false/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UISupportedInterfaceOrientations</key>
@@ -57,21 +71,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>Deze app gebruikt tracking om je fietsroutes te analyseren en betere suggesties te geven.</string>
-	<key>NSMapsUsageDescription</key>
-	<string>Deze app gebruikt Maps voor routeberekening en navigatie.</string>
-	<key>LSApplicationCategoryType</key>
-	<string>public.app-category.navigation</string>
 	<key>UISupportsDocumentBrowser</key>
 	<false/>
-	<key>UIFileSharingEnabled</key>
-	<false/>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
-	<key>CFBundleVersion</key>
-	<string>202501271200</string>
 </dict>
 </plist>
