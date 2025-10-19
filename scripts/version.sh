@@ -83,8 +83,8 @@ update_splash_screen() {
     
     echo -e "${BLUE}Updating SplashScreenView...${NC}"
     
-    # Update appVersion
-    sed -i '' "s/\"[0-9]\+\.[0-9]\+\.[0-9]\+\"/\"$version\"/g" "$splash_file"
+    # Update appVersion - match any version pattern in quotes
+    sed -i '' "s/\"[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\"/\"$version\"/g" "$splash_file"
     
     # Update buildNumber
     sed -i '' "s/\"[0-9]\{12\}\"/\"$build_number\"/g" "$splash_file"

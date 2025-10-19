@@ -15,7 +15,7 @@ struct SplashScreenView: View {
     
     // Version info - Hardcoded for splash screen display
     private var appVersion: String {
-        "1.0.0"
+        "1.0.2"
     }
     
     private var buildNumber: String {
