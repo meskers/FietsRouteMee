@@ -1,0 +1,44 @@
+# Git attributes for FietsRouteMee
+
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Swift files
+*.swift text eol=lf
+
+# Xcode project files
+*.pbxproj text eol=lf
+*.xccheckout text eol=lf
+*.xcworkspace text eol=lf
+
+# Plist files
+*.plist text eol=lf
+
+# Markdown files
+*.md text eol=lf
+
+# Script files
+*.sh text eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.tar.gz binary
+*.dmg binary
+*.ipa binary
+
+# Xcode specific
+*.xcodeproj/* text eol=lf
+*.xcworkspace/* text eol=lf
+
+# Core Data
+*.xcdatamodeld/* text eol=lf
+*.xcdatamodel/* text eol=lf
+
+# Assets
+*.xcassets/* text eol=lf

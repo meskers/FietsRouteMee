@@ -69,5 +69,9 @@
 	<false/>
 	<key>UIFileSharingEnabled</key>
 	<false/>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.0</string>
+	<key>CFBundleVersion</key>
+	<string>202501271200</string>
 </dict>
 </plist>
