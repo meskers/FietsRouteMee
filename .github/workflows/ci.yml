@@ -29,19 +29,27 @@ jobs:
     
     - name: Build project
       run: |
+        echo "Building FietsRouteMee..."
         xcodebuild -project FietsRouteMee.xcodeproj \
           -scheme FietsRouteMee \
           -destination 'platform=iOS Simulator,name=iPhone 15' \
           -configuration Debug \
-          build
+          build \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO
+        echo "Build completed successfully"
     
     - name: Run tests
       run: |
+        echo "Running tests..."
         xcodebuild -project FietsRouteMee.xcodeproj \
           -scheme FietsRouteMee \
           -destination 'platform=iOS Simulator,name=iPhone 15' \
           -configuration Debug \
-          test
+          test \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO
+        echo "Tests completed"
     
     - name: Check code style
       run: |
