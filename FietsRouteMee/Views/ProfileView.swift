@@ -455,11 +455,11 @@ struct WeatherPreferencesSection: View {
 struct AppInfoSection: View {
     // Version info from Info.plist
     private var appVersion: String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.3"
     }
     
     private var buildNumber: String {
-        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "202510191335"
+        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "202510191349"
     }
     
     private var lastUpdate: String {
@@ -726,7 +726,7 @@ struct SettingsView: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("Over de App")
                                     .font(.headline)
-                                Text("Versie 1.0.0 • GitHub Repository")
+                                Text("Versie 1.0.3 • GitHub Repository")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }
@@ -1089,11 +1089,11 @@ struct PrivacySettingsDetailView: View {
 struct AppInfoDetailView: View {
     // Version info from Info.plist
     private var appVersion: String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.3"
     }
     
     private var buildNumber: String {
-        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "202510191335"
+        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "202510191349"
     }
     
     private var lastUpdate: String {
