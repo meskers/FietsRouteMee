@@ -111,7 +111,7 @@ class OpenRouteService: ObservableObject {
             return "cycling-regular" // Regular city cycling
         case .mountain:
             return "cycling-mountain" // Mountain biking
-        case .racing:
+        case .road:
             return "cycling-road" // Road cycling
         case .electric:
             return "cycling-regular" // E-bike uses regular cycling
@@ -194,7 +194,7 @@ class OpenRouteService: ObservableObject {
             options["preference"] = "fastest"
             // Prefer bike paths and avoid busy roads
             options["avoid_features"] = ["highways", "tollways", "steps"]
-        case .racing:
+        case .road:
             options["preference"] = "fastest"
             // Road bikes prefer paved surfaces
             options["avoid_features"] = ["highways", "tollways", "steps", "unpaved"]
