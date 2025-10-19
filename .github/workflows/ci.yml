@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+    
+    - name: Cache Swift Package Manager
+      uses: actions/cache@v3
+      with:
+        path: .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
+    
+    - name: Build project
+      run: |
+        xcodebuild -project FietsRouteMee.xcodeproj \
+          -scheme FietsRouteMee \
+          -destination 'platform=iOS Simulator,name=iPhone 15' \
+          -configuration Debug \
+          build
+    
+    - name: Run tests
+      run: |
+        xcodebuild -project FietsRouteMee.xcodeproj \
+          -scheme FietsRouteMee \
+          -destination 'platform=iOS Simulator,name=iPhone 15' \
+          -configuration Debug \
+          test
+    
+    - name: Check code style
+      run: |
+        # Add SwiftLint or other code style checks here
+        echo "Code style check placeholder"
+    
+    - name: Security scan
+      run: |
+        # Add security scanning tools here
+        echo "Security scan placeholder"
