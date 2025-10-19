@@ -75,6 +75,40 @@ update_info_plist() {
     echo -e "${GREEN}✅ Info.plist updated with version $version (build $build_number)${NC}"
 }
 
+# Function to update SplashScreenView
+update_splash_screen() {
+    local version=$1
+    local build_number=$(date +%Y%m%d%H%M)
+    local splash_file="FietsRouteMee/Views/SplashScreenView.swift"
+    
+    echo -e "${BLUE}Updating SplashScreenView...${NC}"
+    
+    # Update appVersion
+    sed -i '' "s/\"[0-9]\+\.[0-9]\+\.[0-9]\+\"/\"$version\"/g" "$splash_file"
+    
+    # Update buildNumber
+    sed -i '' "s/\"[0-9]\{12\}\"/\"$build_number\"/g" "$splash_file"
+    
+    echo -e "${GREEN}✅ SplashScreenView updated with version $version (build $build_number)${NC}"
+}
+
+# Function to update Xcode project settings
+update_xcode_project() {
+    local version=$1
+    local build_number=$(date +%Y%m%d%H%M)
+    local project_file="FietsRouteMee.xcodeproj/project.pbxproj"
+    
+    echo -e "${BLUE}Updating Xcode project settings...${NC}"
+    
+    # Update MARKETING_VERSION
+    sed -i '' "s/MARKETING_VERSION = [0-9]\+\.[0-9]\+\.[0-9]\+/MARKETING_VERSION = $version/g" "$project_file"
+    
+    # Update CURRENT_PROJECT_VERSION
+    sed -i '' "s/CURRENT_PROJECT_VERSION = [0-9]\+/CURRENT_PROJECT_VERSION = $build_number/g" "$project_file"
+    
+    echo -e "${GREEN}✅ Xcode project updated with version $version (build $build_number)${NC}"
+}
+
 # Function to update VERSION file
 update_version_file() {
     local version=$1
@@ -123,13 +157,21 @@ case "$1" in
         if [[ $REPLY =~ ^[Yy]$ ]]; then
             update_version_file "$new_version"
             update_info_plist "$new_version"
+            update_splash_screen "$new_version"
+            update_xcode_project "$new_version"
             create_git_tag "$new_version"
             
-            echo -e "${GREEN}🎉 Version bumped to $new_version!${NC}"
-            echo -e "${BLUE}Don't forget to:${NC}"
-            echo -e "  • Update CHANGELOG.md"
-            echo -e "  • Push changes: git push origin main --tags"
-            echo -e "  • Create GitHub release"
+        echo -e "${GREEN}🎉 Version bumped to $new_version!${NC}"
+        echo -e "${BLUE}Automatically updated:${NC}"
+        echo -e "  ✅ VERSION file"
+        echo -e "  ✅ Info.plist"
+        echo -e "  ✅ SplashScreenView.swift"
+        echo -e "  ✅ Xcode project settings"
+        echo -e "  ✅ Git tag created"
+        echo -e "${BLUE}Don't forget to:${NC}"
+        echo -e "  • Update CHANGELOG.md"
+        echo -e "  • Push changes: git push origin main --tags"
+        echo -e "  • Create GitHub release"
         else
             echo -e "${YELLOW}Version bump cancelled${NC}"
         fi
@@ -146,6 +188,8 @@ case "$1" in
         
         update_version_file "$new_version"
         update_info_plist "$new_version"
+        update_splash_screen "$new_version"
+        update_xcode_project "$new_version"
         create_git_tag "$new_version"
         
         echo -e "${GREEN}🎉 Version set to $new_version!${NC}"
