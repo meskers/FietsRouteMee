@@ -13,13 +13,13 @@ struct SplashScreenView: View {
     @State private var opacity: Double = 0.0
     @State private var textOpacity: Double = 0.0
     
-    // Version info from Info.plist
+    // Version info - Hardcoded for splash screen display
     private var appVersion: String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+        "1.0.0"
     }
     
     private var buildNumber: String {
-        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
+        "202510191335"
     }
     
     var body: some View {
