@@ -577,6 +577,11 @@ struct SettingsActionRow: View {
 struct AboutView: View {
     @Environment(\.dismiss) private var dismiss
     
+    // Version info from Info.plist
+    private var appVersion: String {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
+    }
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -594,7 +599,7 @@ struct AboutView: View {
                             .font(.largeTitle)
                             .fontWeight(.bold)
                         
-                        Text("Versie 2.0.0")
+                        Text("Versie \(appVersion)")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                         

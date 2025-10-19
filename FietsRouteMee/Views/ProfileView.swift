@@ -453,6 +453,22 @@ struct WeatherPreferencesSection: View {
 }
 
 struct AppInfoSection: View {
+    // Version info from Info.plist
+    private var appVersion: String {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
+    }
+    
+    private var buildNumber: String {
+        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "202510191335"
+    }
+    
+    private var lastUpdate: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.locale = Locale(identifier: "nl_NL")
+        return formatter.string(from: Date())
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("App Informatie")
@@ -460,9 +476,9 @@ struct AppInfoSection: View {
                 .fontWeight(.bold)
             
             VStack(spacing: 8) {
-                InfoRow(title: "Versie", value: "1.0.0")
-                InfoRow(title: "Build", value: "2025.1")
-                InfoRow(title: "Laatste Update", value: "8 oktober 2025")
+                InfoRow(title: "Versie", value: appVersion)
+                InfoRow(title: "Build", value: buildNumber)
+                InfoRow(title: "Laatste Update", value: lastUpdate)
             }
         }
     }
@@ -1071,14 +1087,30 @@ struct PrivacySettingsDetailView: View {
 }
 
 struct AppInfoDetailView: View {
+    // Version info from Info.plist
+    private var appVersion: String {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
+    }
+    
+    private var buildNumber: String {
+        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "202510191335"
+    }
+    
+    private var lastUpdate: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.locale = Locale(identifier: "nl_NL")
+        return formatter.string(from: Date())
+    }
+    
     var body: some View {
         List {
             Section {
                 InfoRow(title: "App Naam", value: "FietsRouteMee")
-                InfoRow(title: "Versie", value: "1.0.0")
-                InfoRow(title: "Build", value: "2025.1")
+                InfoRow(title: "Versie", value: appVersion)
+                InfoRow(title: "Build", value: buildNumber)
                 InfoRow(title: "Ontwikkelaar", value: "Cor Meskers")
-                InfoRow(title: "Laatste Update", value: "10 oktober 2025")
+                InfoRow(title: "Laatste Update", value: lastUpdate)
                 InfoRow(title: "iOS Vereist", value: "18.0+")
             } header: {
                 Text("App Informatie")
