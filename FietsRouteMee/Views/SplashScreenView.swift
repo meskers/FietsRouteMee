@@ -19,7 +19,7 @@ struct SplashScreenView: View {
     }
     
     private var buildNumber: String {
-        "202510191335"
+        "202510191346"
     }
     
     var body: some View {
