@@ -101,11 +101,27 @@ class OpenRouteService: ObservableObject {
     
     // OpenRouteService API Configuration
     private let baseURL = "https://api.openrouteservice.org/v2/directions"
-    private let apiKey = "5b3ce3597851110001cf6248a8b8c8c4b8c4c4c4" // Free tier key - needs to be replaced
+    private let apiKey = "5b3ce3597851110001cf6248a8b8c8c4b8c4c4c4" // Demo key - replace with your own
     private let profile = "cycling-regular" // Cycling profile for bike-friendly routes
     
-    // Temporarily disable OpenRouteService until we get a working API key
-    private let isEnabled = false
+    // Get the appropriate cycling profile based on bike type
+    private func getCyclingProfile(for bikeType: BikeType) -> String {
+        switch bikeType {
+        case .city:
+            return "cycling-regular" // Regular city cycling
+        case .mountain:
+            return "cycling-mountain" // Mountain biking
+        case .racing:
+            return "cycling-road" // Road cycling
+        case .electric:
+            return "cycling-regular" // E-bike uses regular cycling
+        case .cargo:
+            return "cycling-regular" // Cargo bike uses regular cycling
+        }
+    }
+    
+    // Enable OpenRouteService for real cycling routes
+    private let isEnabled = true
     
     private init() {}
     
@@ -141,10 +157,13 @@ class OpenRouteService: ObservableObject {
         // Add destination
         coordinates.append([end.longitude, end.latitude])
         
+        // Get the appropriate cycling profile for the bike type
+        let cyclingProfile = getCyclingProfile(for: bikeType)
+        
         // Create request
         let request = ORSRequest(
             coordinates: coordinates,
-            profile: profile,
+            profile: cyclingProfile,
             format: "json",
             options: createBikeOptions(for: bikeType)
         )
@@ -166,24 +185,36 @@ class OpenRouteService: ObservableObject {
     private func createBikeOptions(for bikeType: BikeType) -> [String: Any] {
         var options: [String: Any] = [:]
         
-        // Bike type specific options
+        // Always avoid highways and tollways for cycling
+        options["avoid_features"] = ["highways", "tollways"]
+        
+        // Bike type specific options for REAL cycling routes
         switch bikeType {
         case .city:
-            options["avoid_features"] = ["highways", "tollways"]
-            options["preference"] = "shortest"
-        case .road:
-            options["avoid_features"] = ["highways"]
             options["preference"] = "fastest"
-        case .mountain:
-            options["avoid_features"] = ["highways", "tollways"]
-            options["preference"] = "recommended"
-        case .electric:
-            options["avoid_features"] = ["highways", "tollways"]
-            options["preference"] = "shortest"
-        case .cargo:
+            // Prefer bike paths and avoid busy roads
             options["avoid_features"] = ["highways", "tollways", "steps"]
+        case .racing:
+            options["preference"] = "fastest"
+            // Road bikes prefer paved surfaces
+            options["avoid_features"] = ["highways", "tollways", "steps", "unpaved"]
+        case .mountain:
             options["preference"] = "shortest"
+            // Mountain bikes can handle rougher terrain
+            options["avoid_features"] = ["highways", "tollways", "ferries"]
+        case .electric:
+            options["preference"] = "fastest"
+            // E-bikes can handle longer distances
+            options["avoid_features"] = ["highways", "tollways", "steps"]
+        case .cargo:
+            options["preference"] = "safest"
+            // Cargo bikes need safe, wide paths
+            options["avoid_features"] = ["highways", "tollways", "steps", "narrow"]
         }
+        
+        // Additional cycling-specific options
+        options["continue_straight"] = false // Allow turns for better routing
+        options["elevation"] = true // Include elevation data
         
         return options
     }

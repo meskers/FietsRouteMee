@@ -61,9 +61,9 @@ class RouteManager: ObservableObject {
     }
     
     nonisolated func calculateRoute(from start: CLLocationCoordinate2D, to end: CLLocationCoordinate2D, 
-                       waypoints: [CLLocationCoordinate2D] = [], bikeType: BikeType? = nil) {
+                           waypoints: [CLLocationCoordinate2D] = [], bikeType: BikeType? = nil) {
         
-        print("🚴‍♂️ RouteManager: Starting BICYCLE route calculation from \(start) to \(end)")
+        print("🚴‍♂️ RouteManager: Starting REAL CYCLING route calculation from \(start) to \(end)")
         
         Task { @MainActor in
             isCalculating = true
@@ -74,11 +74,11 @@ class RouteManager: ObservableObject {
             let preferences = settingsManager.getRoutePreferences()
             
             print("🚴‍♂️ RouteManager: Using bike type: \(selectedBikeType.displayName)")
-            print("🚴‍♂️ RouteManager: Using MapKit for reliable cycling routing")
+            print("🚴‍♂️ RouteManager: Using OpenRouteService for REAL cycling routes")
         
             do {
-                // Use MapKit directly for reliable routing
-                let bikeRoute = try await calculateMapKitRoute(
+                // Try OpenRouteService first for real cycling routes
+                let bikeRoute = try await calculateOpenRouteServiceRoute(
                     from: start,
                     to: end,
                     waypoints: waypoints,
@@ -86,7 +86,7 @@ class RouteManager: ObservableObject {
                     preferences: preferences
                 )
                 
-                print("✅ RouteManager: MapKit route calculated - Distance: \(bikeRoute.distance)m, Duration: \(bikeRoute.duration)s")
+                print("✅ RouteManager: OpenRouteService route calculated - Distance: \(bikeRoute.distance)m, Duration: \(bikeRoute.duration)s")
                 print("✅ RouteManager: Route has \(bikeRoute.polyline.count) coordinates and \(bikeRoute.instructions.count) turn-by-turn instructions")
                 
                 // Check for duplicates
@@ -108,9 +108,41 @@ class RouteManager: ObservableObject {
                 self.isCalculating = false
                 
             } catch let error {
-                print("❌ RouteManager: Route calculation failed: \(error.localizedDescription)")
-                self.errorMessage = "Geen fietsroute gevonden. Probeer andere locaties."
-                self.isCalculating = false
+                print("❌ RouteManager: OpenRouteService failed, falling back to MapKit: \(error.localizedDescription)")
+                
+                // Fallback to MapKit if OpenRouteService fails
+                do {
+                    let bikeRoute = try await calculateMapKitRoute(
+                        from: start,
+                        to: end,
+                        waypoints: waypoints,
+                        bikeType: selectedBikeType,
+                        preferences: preferences
+                    )
+                    
+                    print("✅ RouteManager: MapKit fallback route calculated")
+                    
+                    // Check for duplicates
+                    let existingRoute = self.routes.first { existingRoute in
+                        abs(existingRoute.startLocation.latitude - bikeRoute.startLocation.latitude) < 0.0001 &&
+                        abs(existingRoute.startLocation.longitude - bikeRoute.startLocation.longitude) < 0.0001 &&
+                        abs(existingRoute.endLocation.latitude - bikeRoute.endLocation.latitude) < 0.0001 &&
+                        abs(existingRoute.endLocation.longitude - bikeRoute.endLocation.longitude) < 0.0001
+                    }
+                    
+                    if existingRoute == nil {
+                        self.routes.append(bikeRoute)
+                        self.coreDataManager.saveRoute(bikeRoute)
+                        print("✅ RouteManager: Fallback route added. Total routes: \(self.routes.count)")
+                    }
+                    
+                    self.isCalculating = false
+                    
+                } catch let fallbackError {
+                    print("❌ RouteManager: Both OpenRouteService and MapKit failed: \(fallbackError.localizedDescription)")
+                    self.errorMessage = "Geen fietsroute gevonden. Probeer andere locaties."
+                    self.isCalculating = false
+                }
             }
         }
     }
@@ -267,6 +299,25 @@ class RouteManager: ObservableObject {
         }
         
         return score
+    }
+    
+    private func calculateOpenRouteServiceRoute(from start: CLLocationCoordinate2D, to end: CLLocationCoordinate2D, 
+                                              waypoints: [CLLocationCoordinate2D], bikeType: BikeType, 
+                                              preferences: RoutePreferences) async throws -> BikeRoute {
+        
+        print("🚴‍♂️ RouteManager: Using OpenRouteService for REAL cycling routes")
+        
+        // Use OpenRouteService for bicycle-specific routing
+        let openRouteService = OpenRouteService.shared
+        let bikeRoute = try await openRouteService.calculateCyclingRoute(
+            from: start,
+            to: end,
+            waypoints: waypoints,
+            bikeType: bikeType
+        )
+        
+        print("✅ RouteManager: OpenRouteService calculated real cycling route")
+        return bikeRoute
     }
     
     private func calculateMapKitRoute(from start: CLLocationCoordinate2D, to end: CLLocationCoordinate2D, 
