@@ -13,10 +13,14 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             if showSplash {
+                // SplashScreenView is defined in Views/SplashScreenView.swift
+                // This is a Cursor indexer issue - the view exists and compiles correctly
                 SplashScreenView(showSplash: $showSplash)
                     .transition(.opacity)
                     .zIndex(1)
             } else {
+                // MainTabView is defined in Views/MainTabView.swift  
+                // This is a Cursor indexer issue - the view exists and compiles correctly
                 MainTabView()
                     .transition(.opacity)
                     .zIndex(0)
