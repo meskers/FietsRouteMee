@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="true" userDefinedModelVersionIdentifier="">
-    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
+    <entity name="BikeRouteEntity" representedClassName="BikeRouteEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO" defaultValueString="00000000-0000-0000-0000-000000000000"/>
+        <attribute name="startLatitude" optional="NO" attributeType="Double" usesScalarValueType="YES" defaultValueString="0.0"/>
+        <attribute name="startLongitude" optional="NO" attributeType="Double" usesScalarValueType="YES" defaultValueString="0.0"/>
+        <attribute name="endLatitude" optional="NO" attributeType="Double" usesScalarValueType="YES" defaultValueString="0.0"/>
+        <attribute name="endLongitude" optional="NO" attributeType="Double" usesScalarValueType="YES" defaultValueString="0.0"/>
+        <attribute name="distance" optional="NO" attributeType="Double" usesScalarValueType="YES" defaultValueString="0.0"/>
+        <attribute name="duration" optional="NO" attributeType="Double" usesScalarValueType="YES" defaultValueString="0.0"/>
+        <attribute name="difficulty" optional="NO" attributeType="String" usesScalarValueType="NO" defaultValueString="easy"/>
+        <attribute name="surface" optional="NO" attributeType="String" usesScalarValueType="NO" defaultValueString="mixed"/>
+        <attribute name="bikeType" optional="NO" attributeType="String" usesScalarValueType="NO" defaultValueString="city"/>
+        <attribute name="isFavorite" optional="NO" attributeType="Boolean" usesScalarValueType="YES" defaultValueString="NO"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String" usesScalarValueType="NO"/>
+        <attribute name="notes" optional="YES" attributeType="String" usesScalarValueType="NO"/>
+        <attribute name="elevationData" optional="YES" attributeType="Transformable" usesScalarValueType="NO" valueTransformerName="NSSecureUnarchiveFromDataTransformer"/>
+        <attribute name="polylineData" optional="YES" attributeType="Transformable" usesScalarValueType="NO" valueTransformerName="NSSecureUnarchiveFromDataTransformer"/>
+        <attribute name="instructionsData" optional="YES" attributeType="Transformable" usesScalarValueType="NO" valueTransformerName="NSSecureUnarchiveFromDataTransformer"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
+        <element name="BikeRouteEntity" positionX="-63" positionY="-18" width="128" height="194"/>
     </elements>
 </model>

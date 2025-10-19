@@ -4,7 +4,70 @@
 <dict>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>remote-notification</string>
+		<string>location</string>
+		<string>background-processing</string>
+		<string>background-app-refresh</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Deze app heeft toegang tot je locatie nodig om fietsroutes te berekenen en je positie op de kaart te tonen.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Deze app heeft toegang tot je locatie nodig om fietsroutes te berekenen en je positie op de kaart te tonen, ook wanneer de app op de achtergrond draait.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Deze app heeft toegang tot je locatie nodig om fietsroutes te berekenen en je positie op de kaart te tonen, ook wanneer de app op de achtergrond draait.</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>api.openweathermap.org</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<false/>
+				<key>NSExceptionMinimumTLSVersion</key>
+				<string>TLSv1.2</string>
+			</dict>
+			<key>api.openrouteservice.org</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<false/>
+				<key>NSExceptionMinimumTLSVersion</key>
+				<string>TLSv1.2</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>CFBundleDisplayName</key>
+	<string>FietsRouteMee</string>
+	<key>CFBundleName</key>
+	<string>FietsRouteMee</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Deze app gebruikt tracking om je fietsroutes te analyseren en betere suggesties te geven.</string>
+	<key>NSMapsUsageDescription</key>
+	<string>Deze app gebruikt Maps voor routeberekening en navigatie.</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.navigation</string>
+	<key>UISupportsDocumentBrowser</key>
+	<false/>
+	<key>UIFileSharingEnabled</key>
+	<false/>
 </dict>
 </plist>

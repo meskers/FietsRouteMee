@@ -1,0 +1,64 @@
+# Xcode
+.DS_Store
+*/build/*
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+
+# Build directories
+build/
+.build/
+DerivedData/
+
+# Swift Package Manager
+.swiftpm/
+Packages/
+Package.resolved
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/Build/
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Code Injection
+iOSInjectionProject/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Logs
+*.log
+
+# App Store Connect
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Simulator
+*.simulator
+
+# Core Data
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# User-specific files
+*.xcuserstate
+*.xcworkspace/xcuserdata/
