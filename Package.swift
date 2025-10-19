@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "FietsRouteMee",
     platforms: [
-        .iOS(.v18)
+        .iOS(.v17)
     ],
     products: [
         .library(
