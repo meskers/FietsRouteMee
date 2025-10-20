@@ -72,6 +72,17 @@ struct MainTabView: View {
                 print("🗑️ MainTabView: Cleared all old routes on startup")
                 
                 await locationManager.requestLocationPermission()
+                
+                // Fetch weather for current location
+                if let location = locationManager.userLocation {
+                    weatherManager.fetchWeather(for: location.coordinate)
+                    print("🌤️ MainTabView: Fetching weather for location \(location.coordinate)")
+                } else {
+                    // Fallback to Amsterdam if no location available
+                    let amsterdamCoordinate = CLLocationCoordinate2D(latitude: 52.3676, longitude: 4.9041)
+                    weatherManager.fetchWeather(for: amsterdamCoordinate)
+                    print("🌤️ MainTabView: No location available, fetching weather for Amsterdam")
+                }
             }
         }
     }
@@ -235,6 +246,13 @@ struct MapTabView: View {
                             selectedRoute = nil
                             print("🚴‍♂️ MapTabView: Selected route no longer exists, clearing")
                         }
+                    }
+                }
+                .onChange(of: locationManager.userLocation) { oldLocation, newLocation in
+                    // Fetch weather when location changes
+                    if let newLocation = newLocation {
+                        weatherManager.fetchWeather(for: newLocation.coordinate)
+                        print("🌤️ MapTabView: Location changed, fetching weather for \(newLocation.coordinate)")
                     }
                 }
                 .alert("Fout bij route berekening", isPresented: .constant(routeManager.errorMessage != nil)) {
