@@ -12,7 +12,6 @@ struct ProfileView: View {
     @ObservedObject var favoritesManager: FavoritesManager
     @ObservedObject var weatherManager: WeatherManager
     @ObservedObject var routeManager: RouteManager
-    @ObservedObject var offlineMapsManager: OfflineMapsManager
     @ObservedObject private var coreDataManager = CoreDataManager.shared
     @StateObject private var routeCacheManager = RouteCacheManager()
     @StateObject private var userProfileManager = UserProfileManager()
@@ -317,7 +316,6 @@ struct StatisticsSection: View {
 
 struct QuickActionsSection: View {
     @State private var showingNewRoute = false
-    @State private var showingOfflineMaps = false
     @State private var showingLiveTracking = false
     @State private var showingShareSheet = false
     
@@ -334,14 +332,6 @@ struct QuickActionsSection: View {
                     color: .green
                 ) {
                     showingNewRoute = true
-                }
-                
-                QuickActionCard(
-                    title: "Offline Kaarten",
-                    icon: "map.fill",
-                    color: .blue
-                ) {
-                    showingOfflineMaps = true
                 }
                 
                 QuickActionCard(
@@ -363,9 +353,6 @@ struct QuickActionsSection: View {
         }
         .sheet(isPresented: $showingNewRoute) {
             SearchView(routeManager: RouteManager.shared, locationManager: LocationManager.shared)
-        }
-        .sheet(isPresented: $showingOfflineMaps) {
-            OfflineMapsView()
         }
         .sheet(isPresented: $showingLiveTracking) {
             ActivityTrackingView()
@@ -499,9 +486,6 @@ private extension ProfileView {
         
         // Clear caches
         routeCacheManager.clearAllCaches()
-        
-        // Delete offline maps
-        offlineMapsManager.deleteAllDownloads()
         
         // Reset user profile
         userProfileManager.resetProfile()
@@ -1318,8 +1302,7 @@ struct StatisticsView: View {
     ProfileView(
         favoritesManager: FavoritesManager(),
         weatherManager: WeatherManager(),
-        routeManager: RouteManager.shared,
-        offlineMapsManager: OfflineMapsManager()
+        routeManager: RouteManager.shared
     )
 }
 

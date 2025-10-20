@@ -13,7 +13,6 @@ struct MainTabView: View {
     @StateObject private var routeManager = RouteManager.shared
     @StateObject private var favoritesManager = FavoritesManager()
     @StateObject private var weatherManager = WeatherManager()
-    @StateObject private var offlineMapsManager = OfflineMapsManager()
     @ObservedObject private var appSettingsManager = AppSettingsManager.shared
     @State private var selectedTab = 0
     
@@ -23,8 +22,7 @@ struct MainTabView: View {
             MapTabView(
                 locationManager: locationManager,
                 routeManager: routeManager,
-                weatherManager: weatherManager,
-                offlineMapsManager: offlineMapsManager
+                weatherManager: weatherManager
             )
             .tabItem {
                 Label("Kaart", systemImage: "map.fill")
@@ -57,8 +55,7 @@ struct MainTabView: View {
                     ProfileView(
                         favoritesManager: favoritesManager,
                         weatherManager: weatherManager,
-                        routeManager: routeManager,
-                        offlineMapsManager: offlineMapsManager
+                        routeManager: routeManager
                     )
             .tabItem {
                 Label("Profiel", systemImage: "person.crop.circle.fill")
@@ -84,14 +81,11 @@ struct MapTabView: View {
     @ObservedObject var locationManager: LocationManager
     @ObservedObject var routeManager: RouteManager
     @ObservedObject var weatherManager: WeatherManager
-    @ObservedObject var offlineMapsManager: OfflineMapsManager
     @ObservedObject private var appSettingsManager = AppSettingsManager.shared
     @State private var showingRouteDetails = false
     @State private var selectedRoute: BikeRoute?
     @State private var showingRouteOptions = false
     @State private var showingAdvancedPlanner = false
-    @State private var showingOfflineMaps = false
-    @State private var showingOfflineNavigation = false
     @State private var pendingStartLocation: CLLocationCoordinate2D?
     @State private var pendingEndLocation: CLLocationCoordinate2D?
     
@@ -193,8 +187,7 @@ struct MapTabView: View {
                     // Quick Action Buttons
                     QuickActionButtons(
                         showingRouteOptions: $showingRouteOptions,
-                        showingAdvancedPlanner: $showingAdvancedPlanner,
-                        showingOfflineMaps: $showingOfflineMaps
+                        showingAdvancedPlanner: $showingAdvancedPlanner
                     )
                     }
                 }
@@ -222,14 +215,6 @@ struct MapTabView: View {
                     print("🚴‍♂️ MapTabView: Route generated, setting selectedRoute")
                 }
             )
-        }
-        .sheet(isPresented: $showingOfflineMaps) {
-            OfflineMapsView()
-        }
-        .sheet(isPresented: $showingOfflineNavigation) {
-            if let route = selectedRoute {
-                OfflineNavigationView(route: route)
-            }
         }
                 .onChange(of: routeManager.routes.count) {
                     // Don't auto-select routes - let user choose manually
@@ -265,7 +250,6 @@ struct MapTabView: View {
 struct QuickActionButtons: View {
     @Binding var showingRouteOptions: Bool
     @Binding var showingAdvancedPlanner: Bool
-    @Binding var showingOfflineMaps: Bool
     
     var body: some View {
         VStack(spacing: 12) {
@@ -290,23 +274,23 @@ struct QuickActionButtons: View {
                 .accessibilityHint("Tik om route instellingen te wijzigen")
                 
                 Button(action: { 
-                    showingOfflineMaps = true 
+                    showingAdvancedPlanner = true 
                 }) {
                     HStack {
-                        Image(systemName: "externaldrive.fill")
+                        Image(systemName: "magnifyingglass.circle.fill")
                             .foregroundColor(.white)
-                        Text("Offline Kaarten")
+                        Text("Zoek Route")
                             .font(.subheadline)
                             .fontWeight(.medium)
                             .foregroundColor(.white)
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 12)
-                    .background(.purple, in: RoundedRectangle(cornerRadius: 16))
+                    .background(.blue, in: RoundedRectangle(cornerRadius: 16))
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel("Offline kaarten")
-                .accessibilityHint("Tik om offline kaarten te beheren")
+                .accessibilityLabel("Zoek route")
+                .accessibilityHint("Tik om een nieuwe route te zoeken")
             }
         }
         .padding(.horizontal)

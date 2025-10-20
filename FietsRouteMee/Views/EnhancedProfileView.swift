@@ -49,14 +49,12 @@ struct EnhancedProfileView: View {
     @StateObject private var favoritesManager = FavoritesManager()
     @StateObject private var weatherManager = WeatherManager()
     @StateObject private var routeManager = RouteManager.shared
-    @StateObject private var offlineMapsManager = OfflineMapsManager()
     @ObservedObject private var appSettingsManager = AppSettingsManager.shared
     @ObservedObject private var mapLibreService = MapLibreService.shared
     @ObservedObject private var fietsknooppuntenService = FietsknooppuntenService.shared
     
     @State private var showingImagePicker = false
     @State private var showingNewRoute = false
-    @State private var showingOfflineMaps = false
     @State private var selectedImage: UIImage?
     @State private var showingSettings = false
     @State private var showingAbout = false
@@ -246,15 +244,6 @@ struct EnhancedProfileView: View {
                                         title: "Fietsknooppunten Planner",
                                         subtitle: "Plan routes via Nederlandse knooppunten",
                                         icon: "bicycle"
-                                    )
-                                }
-                                .buttonStyle(.plain)
-                                
-                                Button(action: { showingOfflineMaps = true }) {
-                                    SettingsActionRow(
-                                        title: "Offline Kaarten",
-                                        subtitle: "Download kaarten voor offline gebruik",
-                                        icon: "map"
                                     )
                                 }
                                 .buttonStyle(.plain)
